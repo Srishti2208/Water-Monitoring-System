@@ -1,0 +1,129 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  password      String?
+  role          String         @default("CITIZEN") // CITIZEN, OFFICIAL, ADMIN
+  trustScore    Int            @default(100)
+  reports       Report[]
+  subscriptions Subscription[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Lake {
+  id                 String               @id @default(cuid())
+  name               String
+  ward               String
+  lat                Float
+  lng                Float
+  currentHealthScore Int                  @default(70)
+  trend              String               @default("STABLE") // IMPROVING, DECLINING, STABLE
+  reports            Report[]
+  snapshots          LakeHealthSnapshot[]
+  subscriptions      Subscription[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+}
+
+model Report {
+  id           String        @id @default(cuid())
+  photoPaths   String        // JSON array string
+  lat          Float
+  lng          Float
+  capturedAt   DateTime
+  uploadedAt   DateTime      @default(now())
+  readings     String        // JSON string: { ph?: number, transparencyCmBucket?: string, tempC?: number }
+  observations String        // JSON string: { odor, color, foam, waste, deadFish }
+  vision       String?       // JSON string: { labels, severity, confidence, provider, notes }
+  rainContext  String?       // JSON string: { recentRainMm, isStormwaterRunoff, note }
+  trust        String        // JSON string: { exifVerified, communityVerified, duplicateOfId }
+  status       String        @default("SUBMITTED") // SUBMITTED, AI_VALIDATED, COMPLAINT_SENT, ACKNOWLEDGED, IN_PROGRESS, RESOLVED_CLAIMED, CITIZEN_VERIFIED, CLOSED, REJECTED, REOPENED
+  lakeId       String
+  lake         Lake          @relation(fields: [lakeId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dHash        String?
+  complaint    Complaint?
+  statusEvents StatusEvent[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Complaint {
+  id           String        @id @default(cuid())
+  reportId     String        @unique
+  report       Report        @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  trackingId   String        @unique
+  letterText   String
+  pdfPath      String?
+  emailStatus  String        @default("SENT_DEMO") // SENT_DEMO, SENT, PENDING, FAILED
+  priority     String        @default("MEDIUM")    // LOW, MEDIUM, HIGH, CRITICAL
+  sentAt       DateTime      @default(now())
+  statusEvents StatusEvent[]
+  escalations  Escalation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model StatusEvent {
+  id          String     @id @default(cuid())
+  complaintId String?
+  complaint   Complaint? @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  reportId    String?
+  report      Report?    @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  fromStatus  String
+  toStatus    String
+  actor       String
+  note        String?
+  timestamp   DateTime   @default(now())
+}
+
+model Escalation {
+  id          String    @id @default(cuid())
+  complaintId String
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  level       Int       // 1, 2, 3
+  reason      String
+  createdAt   DateTime  @default(now())
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lakeId    String
+  lake      Lake     @relation(fields: [lakeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, lakeId])
+}
+
+model LakeHealthSnapshot {
+  id        String   @id @default(cuid())
+  lakeId    String
+  lake      Lake     @relation(fields: [lakeId], references: [id], onDelete: Cascade)
+  date      DateTime
+  score     Int
+
+  @@index([lakeId, date])
+}
+
+model Outbox {
+  id        String   @id @default(cuid())
+  to        String
+  subject   String
+  body      String
+  pdfPath   String?
+  status    String   @default("SENT_DEMO") // QUEUED, SENT_DEMO, SENT
+  createdAt DateTime @default(now())
+}
