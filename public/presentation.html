@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JalDrishti — Hackathon Presentation Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; overflow: hidden; }
+    .slide { display: none; height: 100vh; width: 100vw; padding: 3rem 4rem; flex-direction: column; justify-content: space-between; box-sizing: border-box; }
+    .slide.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.99); } to { opacity: 1; transform: scale(1); } }
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+</head>
+<body class="select-none">
+
+  <!-- TOP BAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-slate-900/80 backdrop-blur border-b border-slate-800 text-xs">
+    <div class="flex items-center gap-2">
+      <span class="h-3 w-3 rounded-full bg-cyan-400"></span>
+      <span class="font-bold tracking-wider uppercase text-slate-300">JalDrishti • Hackathon Pitch Deck</span>
+    </div>
+    <div class="flex items-center gap-4 text-slate-400">
+      <span>Use <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700">◀</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700">▶</kbd> or Spacebar to navigate</span>
+      <span id="slide-counter" class="font-mono text-cyan-400 font-bold">1 / 10</span>
+    </div>
+  </header>
+
+  <!-- SLIDE 1: TITLE SLIDE -->
+  <section class="slide active" id="slide-1">
+    <div></div>
+    <div class="max-w-4xl space-y-6">
+      <span class="badge bg-sky-950 text-sky-400 border border-sky-800">Civic-Tech • Environmental AI Governance</span>
+      <h1 class="text-6xl font-black tracking-tight leading-tight">
+        <span class="gradient-text">JalDrishti (जलदृष्टि)</span><br>
+        Autonomous Lake &amp; Water Quality Monitoring Platform
+      </h1>
+      <p class="text-xl text-slate-300 font-normal max-w-2xl leading-relaxed">
+        Citizen-powered photo verification, multimodal AI pollution classification, real-time GIS hotspot tracking, and autonomous statutory complaint escalation for Bengaluru waterbodies.
+      </p>
+      <div class="flex items-center gap-6 pt-4 text-sm text-slate-400">
+        <div><strong>Theme:</strong> Smart Governance &amp; Sustainability</div>
+        <div>•</div>
+        <div><strong>Location:</strong> Bengaluru, Karnataka (BBMP / KSPCB)</div>
+      </div>
+    </div>
+    <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-800/80 pt-4">
+      <span>Team JalDrishti</span>
+      <span>Press Right Arrow or Click Next &rarr;</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: THE PROBLEM -->
+  <section class="slide" id="slide-2">
+    <div>
+      <span class="badge bg-rose-950 text-rose-400 border border-rose-800">The Ecological Emergency</span>
+      <h2 class="text-4xl font-extrabold mt-2">Bengaluru's Broken Water Governance Loop</h2>
+    </div>
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
+        <div class="text-3xl font-black text-rose-400">01</div>
+        <h3 class="text-lg font-bold text-white">Unabated Effluent &amp; Foam</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Over 40% of Bengaluru's wastewater enters lakes untreated. Iconic lakes like Bellandur &amp; Varthur regularly erupt in toxic chemical foam and hypoxic fish kills.
+        </p>
+      </div>
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
+        <div class="text-3xl font-black text-amber-400">02</div>
+        <h3 class="text-lg font-bold text-white">Fragmented Citizen Grievance</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Citizens report issues across Twitter, WhatsApp, and fragmented portals with zero GPS verification, leading to complaints being dismissed as unverified noise.
+        </p>
+      </div>
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-3">
+        <div class="text-3xl font-black text-sky-400">03</div>
+        <h3 class="text-lg font-bold text-white">Zero Statutory Accountability</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Ward authorities auto-close tickets without verifiable remediation proof. No formal linkage exists to Section 24 of the Water Act or Central CPGRAMS oversight.
+        </p>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">Problem Statement &amp; Civic Context</div>
+  </section>
+
+  <!-- SLIDE 3: OUR SOLUTION -->
+  <section class="slide" id="slide-3">
+    <div>
+      <span class="badge bg-teal-950 text-teal-400 border border-teal-800">The Solution</span>
+      <h2 class="text-4xl font-extrabold mt-2">JalDrishti: Closing the Civic Action Loop</h2>
+    </div>
+    <div class="grid grid-cols-4 gap-4 my-auto">
+      <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-cyan-400 font-bold text-sm">Step 1: Evidence</div>
+        <h4 class="font-bold text-white">Tamper-Free Reporting</h4>
+        <p class="text-xs text-slate-400">Client-side EXIF GPS extraction &amp; 3 standardized sensory readings (pH, Secchi depth, temp). Offline PWA storage in IndexedDB.</p>
+      </div>
+      <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-cyan-400 font-bold text-sm">Step 2: Intelligence</div>
+        <h4 class="font-bold text-white">Multimodal AI Vision</h4>
+        <p class="text-xs text-slate-400">Automated classification of foam, algal bloom, solid waste, and dead fish. dHash perceptual hashing filters duplicates within 500m.</p>
+      </div>
+      <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-cyan-400 font-bold text-sm">Step 3: Action</div>
+        <h4 class="font-bold text-white">Statutory Legal Notice</h4>
+        <p class="text-xs text-slate-400">Auto-drafts legal notices to BBMP &amp; KSPCB under the Water Act, 1974. Generates verifiable PDF &amp; CPGRAMS handoff text.</p>
+      </div>
+      <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-cyan-400 font-bold text-sm">Step 4: Closure</div>
+        <h4 class="font-bold text-white">Citizen-Verified Closure</h4>
+        <p class="text-xs text-slate-400">15-minute SLA cron escalates breaches (Ward &rarr; Zonal &rarr; State KSPCB). Cases cannot close without citizen on-ground sign-off.</p>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">End-to-End Civic Architecture</div>
+  </section>
+
+  <!-- SLIDE 4: THE SIGNATURE METRIC: LAKE HEALTH SCORE -->
+  <section class="slide" id="slide-4">
+    <div>
+      <span class="badge bg-sky-950 text-sky-400 border border-sky-800">Signature Innovation</span>
+      <h2 class="text-4xl font-extrabold mt-2">Dynamic Algorithmic Lake Health Score</h2>
+    </div>
+    <div class="grid grid-cols-2 gap-8 my-auto items-center">
+      <div class="space-y-4">
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl font-mono text-sm text-cyan-300">
+          Score = round(100 - min(100, 8 × ∑(severity_i × e^(-ageDays_i / 14)))) - Modifiers
+        </div>
+        <ul class="text-sm space-y-2 text-slate-300">
+          <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> <strong>90-Day Exponential Decay:</strong> Recent severe pollution heavily penalizes health; remediated lakes recover over time.</li>
+          <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> <strong>Chemical Modifiers:</strong> Abnormal pH (&lt;6 or &gt;9) subtracts 5; Low Secchi transparency (&lt;30cm) subtracts 5.</li>
+          <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> <strong>Community Corroboration:</strong> &ge;2 citizens within 250m and 48h increases effective triage priority.</li>
+        </ul>
+      </div>
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 space-y-4">
+        <h4 class="font-bold text-white text-base">Lake Health Classification Bands</h4>
+        <div class="space-y-3 text-xs">
+          <div class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-800 flex justify-between items-center">
+            <div><strong class="text-emerald-400 text-sm">70 – 100: Good / Clean Baseline</strong><p class="text-slate-400">Aerated water, stable riparian ecology (e.g. Sankey Tank, Jakkur Lake)</p></div>
+            <span class="text-emerald-400 font-mono font-bold text-lg">74 - 88</span>
+          </div>
+          <div class="p-3 rounded-lg bg-amber-950/60 border border-amber-800 flex justify-between items-center">
+            <div><strong class="text-amber-400 text-sm">40 – 70: Moderate / Caution</strong><p class="text-slate-400">Micro-algal scum, seasonal runoff, localized solid waste (e.g. Hebbal, Madiwala)</p></div>
+            <span class="text-amber-400 font-mono font-bold text-lg">54 - 68</span>
+          </div>
+          <div class="p-3 rounded-lg bg-rose-950/60 border border-rose-800 flex justify-between items-center">
+            <div><strong class="text-rose-400 text-sm">0 – 40: Critical Ecological Emergency</strong><p class="text-slate-400">Toxic chemical froth, active raw sewage inflow, fish kills (e.g. Bellandur, Varthur)</p></div>
+            <span class="text-rose-400 font-mono font-bold text-lg">24 - 38</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">Mathematical Water Quality Modeling</div>
+  </section>
+
+  <!-- SLIDE 5: TECHNICAL ARCHITECTURE -->
+  <section class="slide" id="slide-5">
+    <div>
+      <span class="badge bg-indigo-950 text-indigo-400 border border-indigo-800">Engineering</span>
+      <h2 class="text-4xl font-extrabold mt-2">Robust, Zero-API-Key Architecture</h2>
+    </div>
+    <div class="grid grid-cols-3 gap-6 my-auto text-xs">
+      <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-cyan-400 font-bold uppercase text-[11px]">Frontend &amp; PWA</div>
+        <h4 class="font-bold text-sm text-white">Next.js 14 + Tailwind + Leaflet</h4>
+        <p class="text-slate-400">Server Components + Client interactivity. OpenStreetMap raster tiles (free, no Google Maps billing). Recharts SVG area graphs for 90-day time series.</p>
+        <div class="text-slate-500 font-mono text-[10px] pt-1">exifr • Dexie IndexedDB • shadcn/ui</div>
+      </div>
+
+      <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-teal-400 font-bold uppercase text-[11px]">Backend &amp; Database</div>
+        <h4 class="font-bold text-sm text-white">Prisma ORM + SQLite + NextAuth v5</h4>
+        <p class="text-slate-400">Zero external database installation. File-based SQLite (`dev.db`) pre-seeded with 12 lakes and 1,092 daily snapshots. Edge JWT role-gating for `/official` and `/admin`.</p>
+        <div class="text-slate-500 font-mono text-[10px] pt-1">SQLite • bcryptjs • node-cron</div>
+      </div>
+
+      <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-amber-400 font-bold uppercase text-[11px]">AI, Weather &amp; Legal</div>
+        <h4 class="font-bold text-sm text-white">Multimodal Vision + Open-Meteo + PDF</h4>
+        <p class="text-slate-400">Provider Pattern with mock deterministic fallback (100% offline) or Gemini 1.5 Flash. Open-Meteo precipitation API. `@react-pdf/renderer` generates official legal dockets.</p>
+        <div class="text-slate-500 font-mono text-[10px] pt-1">Sharp dHash • Resend SDK • @react-pdf</div>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">Technical Stack &amp; Resiliency</div>
+  </section>
+
+  <!-- SLIDE 6: ANTI-SPAM & AI VERIFICATION -->
+  <section class="slide" id="slide-6">
+    <div>
+      <span class="badge bg-cyan-950 text-cyan-400 border border-cyan-800">Verification Pipeline</span>
+      <h2 class="text-4xl font-extrabold mt-2">Anti-Spam &amp; Multimodal AI Engine</h2>
+    </div>
+    <div class="grid grid-cols-3 gap-6 my-auto text-xs">
+      <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/60 space-y-3">
+        <div class="text-cyan-400 text-2xl font-bold">dHash</div>
+        <h4 class="font-bold text-sm text-white">Perceptual Duplicate Detection</h4>
+        <p class="text-slate-400 leading-relaxed">
+          Sharp resizes evidence to 9x8 grayscale, generating a 64-bit matrix. If an image has a Hamming distance &le; 8 to any photo taken within 500m in the last 7 days, it is instantly marked <code>REJECTED</code> to prevent double counting.
+        </p>
+      </div>
+
+      <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/60 space-y-3">
+        <div class="text-teal-400 text-2xl font-bold">GPS EXIF</div>
+        <h4 class="font-bold text-sm text-white">Tamper-Proof Coordinate Guard</h4>
+        <p class="text-slate-400 leading-relaxed">
+          Coordinates are extracted directly from photo camera sensors with <code>exifr</code>. Coordinates can never be user-typed. Missing EXIF or capture skew &gt; 15 min automatically tags reports as <code>UNVERIFIED</code>.
+        </p>
+      </div>
+
+      <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/60 space-y-3">
+        <div class="text-amber-400 text-2xl font-bold">Weather</div>
+        <h4 class="font-bold text-sm text-white">Stormwater Runoff Correlation</h4>
+        <p class="text-slate-400 leading-relaxed">
+          Open-Meteo 72h precipitation analysis flags whether rainfall exceeded 20mm prior to the report, automatically differentiating illegal dry-weather sewage dumping from wet-weather municipal stormwater overflow.
+        </p>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">Data Integrity &amp; Verification</div>
+  </section>
+
+  <!-- SLIDE 7: STATUTORY WORKFLOW & SLA STATE MACHINE -->
+  <section class="slide" id="slide-7">
+    <div>
+      <span class="badge bg-rose-950 text-rose-400 border border-rose-800">Governance Engine</span>
+      <h2 class="text-4xl font-extrabold mt-2">Statutory State Machine &amp; SLA Escalation</h2>
+    </div>
+    <div class="my-auto space-y-6">
+      <div class="flex items-center justify-between text-xs font-mono font-bold bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <span class="text-slate-400">SUBMITTED</span> &rarr;
+        <span class="text-cyan-400">AI_VALIDATED</span> &rarr;
+        <span class="text-sky-400">COMPLAINT_SENT</span> &rarr;
+        <span class="text-indigo-400">ACKNOWLEDGED</span> &rarr;
+        <span class="text-amber-400">IN_PROGRESS</span> &rarr;
+        <span class="text-purple-400">RESOLVED_CLAIMED</span> &rarr;
+        <span class="text-emerald-400">CITIZEN_VERIFIED</span> &rarr;
+        <span class="text-slate-300">CLOSED</span>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-lg bg-slate-800/60 border border-slate-700">
+          <strong class="text-rose-400 text-sm block mb-1">Level 1 Escalation (&gt; 7 Days)</strong>
+          <p class="text-slate-400">Triggered if complaint remains unacknowledged by Ward Executive Engineer for over 7 business days.</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-800/60 border border-slate-700">
+          <strong class="text-rose-400 text-sm block mb-1">Level 2 Escalation (&gt; 14 Days)</strong>
+          <p class="text-slate-400">Triggered if remediation is not in progress within 14 days. Escalated to Zonal Joint Commissioner, BBMP.</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-800/60 border border-slate-700">
+          <strong class="text-rose-400 text-sm block mb-1">Level 3 Escalation (&gt; 21 Days)</strong>
+          <p class="text-slate-400">Statutory breach escalated to Member Secretary, Karnataka State Pollution Control Board (KSPCB) for legal prosecution.</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">Enforceable Civic Accountability</div>
+  </section>
+
+  <!-- SLIDE 8: THE 5-MINUTE LIVE DEMO LOOP -->
+  <section class="slide" id="slide-8">
+    <div>
+      <span class="badge bg-emerald-950 text-emerald-400 border border-emerald-800">Walkthrough</span>
+      <h2 class="text-4xl font-extrabold mt-2">5-Minute Judge Demo Script</h2>
+    </div>
+    <div class="grid grid-cols-4 gap-4 my-auto text-xs">
+      <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-emerald-400 font-bold">Step 1 • Citizen</div>
+        <h4 class="font-bold text-white text-sm">Report Incident</h4>
+        <p class="text-slate-400">Open <code>/report</code>. Click "Toxic Foam (Bellandur)". Watch EXIF GPS lock coordinates onto mini-map. Record pH 9.0 and Secchi &lt;30cm. Submit report.</p>
+      </div>
+
+      <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-cyan-400 font-bold">Step 2 • AI Engine</div>
+        <h4 class="font-bold text-white text-sm">Validate &amp; Notice</h4>
+        <p class="text-slate-400">AI assigns Severity 4/5. dHash flags image uniqueness. Download official PDF complaint letter with Tracking ID (e.g. <code>JD-BLR-202611-1007</code>).</p>
+      </div>
+
+      <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-indigo-400 font-bold">Step 3 • Official</div>
+        <h4 class="font-bold text-white text-sm">Triage &amp; Action</h4>
+        <p class="text-slate-400">Switch to <code>official@demo.in</code> at <code>/login</code>. View SLA queue. Click "Acknowledge" &rarr; "In Progress" &rarr; "Mark Action Taken" with resolution notes.</p>
+      </div>
+
+      <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 space-y-2">
+        <div class="text-amber-400 font-bold">Step 4 • Citizen</div>
+        <h4 class="font-bold text-white text-sm">Verify &amp; Close</h4>
+        <p class="text-slate-400">Back to <code>/my-reports</code> as Citizen. Inspect audit timeline. Click "Verify Remediation" to permanently close the case with citizen on-ground validation!</p>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">End-to-End Walkthrough Path</div>
+  </section>
+
+  <!-- SLIDE 9: SCALABILITY & REAL-WORLD ROLLOUT -->
+  <section class="slide" id="slide-9">
+    <div>
+      <span class="badge bg-purple-950 text-purple-400 border border-purple-800">Impact &amp; Roadmap</span>
+      <h2 class="text-4xl font-extrabold mt-2">Production Scalability &amp; Real-World Rollout</h2>
+    </div>
+    <div class="grid grid-cols-3 gap-6 my-auto text-xs">
+      <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <h4 class="font-bold text-sm text-white">YOLO Vision Model Swap</h4>
+        <p class="text-slate-400">The provider architecture decouples vision inference. In production, a fine-tuned edge YOLOv11 water-segmentation endpoint replaces the mock provider without changing the database or UI.</p>
+      </div>
+      <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <h4 class="font-bold text-sm text-white">Low-Cost IoT Sensor Nodes</h4>
+        <p class="text-slate-400">Seamlessly ingests telemetry from solar-powered buoys measuring Dissolved Oxygen (DO), Electrical Conductivity (EC), and Turbidity via REST webhooks directly into the Health Score engine.</p>
+      </div>
+      <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/60 space-y-2">
+        <h4 class="font-bold text-sm text-white">National Rollout via CPGRAMS</h4>
+        <p class="text-slate-400">Designed to integrate with MoHUA's Swachhata platform and National Green Tribunal (NGT) compliance monitoring across 2,000+ urban lakes in India.</p>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4">Expansion &amp; Sustainability</div>
+  </section>
+
+  <!-- SLIDE 10: CONCLUSION -->
+  <section class="slide" id="slide-10">
+    <div></div>
+    <div class="max-w-3xl space-y-6 text-center mx-auto">
+      <span class="badge bg-teal-950 text-teal-400 border border-teal-800">Thank You</span>
+      <h1 class="text-5xl font-black tracking-tight leading-tight">
+        Restoring Bengaluru's Water Heritage with <span class="gradient-text">JalDrishti</span>
+      </h1>
+      <p class="text-lg text-slate-300 font-normal leading-relaxed">
+        Autonomous environmental governance where civic action is verified, statutory deadlines are enforced, and citizens hold the final seal of resolution.
+      </p>
+
+      <div class="pt-6 flex justify-center gap-4 text-xs">
+        <a href="http://localhost:3000" target="_blank" class="px-5 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold transition">Launch Live App &rarr;</a>
+        <a href="https://github.com/Srishti2208/Water-Monitoring-System" target="_blank" class="px-5 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-slate-700 transition">GitHub Repository</a>
+      </div>
+
+      <div class="text-xs text-slate-500 pt-6">
+        Ready for Q&amp;A • Try live at <code>http://localhost:3000</code>
+      </div>
+    </div>
+    <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-800/80 pt-4">
+      <span>JalDrishti Platform</span>
+      <span>Presentation Complete</span>
+    </div>
+  </section>
+
+  <!-- BOTTOM CONTROLS -->
+  <footer class="fixed bottom-4 right-8 z-50 flex items-center gap-2">
+    <button id="prev-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-xs font-semibold">◀ Prev</button>
+    <button id="next-btn" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded text-xs font-semibold">Next ▶</button>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      document.querySelectorAll('.slide').forEach((s, idx) => {
+        s.classList.toggle('active', idx + 1 === currentSlide);
+      });
+
+      document.getElementById('slide-counter').innerText = `${currentSlide} / ${totalSlides}`;
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => showSlide(currentSlide - 1));
+    document.getElementById('next-btn').addEventListener('click', () => showSlide(currentSlide + 1));
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        showSlide(currentSlide - 1);
+      }
+    });
+  </script>
+</body>
+</html>
