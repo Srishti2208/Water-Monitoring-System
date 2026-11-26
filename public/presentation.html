@@ -16,6 +16,12 @@
     .gradient-gold { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .card-glass { background: rgba(30, 41, 59, 0.55); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.6); }
     .code-block { font-family: monospace; background: #070d18; border: 1px solid #1e293b; border-radius: 0.5rem; padding: 0.75rem; }
+    
+    @media print {
+      body { overflow: visible !important; background-color: #0b1120 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      header, footer { display: none !important; }
+      .slide { display: flex !important; page-break-after: always; height: 100vh; padding: 2.5rem 3rem !important; }
+    }
   </style>
 </head>
 <body class="select-none">
@@ -28,12 +34,19 @@
       <span class="text-slate-500 font-mono">|</span>
       <span class="text-cyan-400 font-medium">Presenter: Srishti A</span>
     </div>
-    <div class="flex items-center gap-5 text-slate-400">
+    <div class="flex items-center gap-4 text-slate-400">
       <div class="flex items-center gap-2">
-        <span class="hidden md:inline text-slate-500">Navigation:</span>
+        <a href="/JalDrishti_Presentation_Srishti_A.pptx" download class="flex items-center gap-1.5 px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md font-semibold transition text-xs shadow-sm">
+          <span>⬇ Download .PPTX</span>
+        </a>
+        <button onclick="window.print()" class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md font-semibold border border-slate-700 transition text-xs">
+          <span>🖨 Print / PDF</span>
+        </button>
+      </div>
+      <div class="hidden lg:flex items-center gap-2">
+        <span class="text-slate-500">Keys:</span>
         <kbd class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700 font-mono text-[11px]">◀</kbd>
         <kbd class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700 font-mono text-[11px]">▶</kbd>
-        <span class="text-[11px] text-slate-500">or Spacebar</span>
       </div>
       <div id="slide-counter" class="font-mono text-cyan-300 font-bold bg-cyan-950/60 px-2.5 py-1 rounded-md border border-cyan-800/80">
         1 / 12
