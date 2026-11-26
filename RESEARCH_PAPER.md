@@ -1,9 +1,11 @@
 # JalDrishti: A Decentralized, Multimodal AI-Driven and Citizen-Verified Urban Water Quality Monitoring and Civic Governance Platform
 
-**Authors:** Srishti et al.  
-**Affiliation:** Department of Computer Science & Engineering / Environmental Engineering  
+**Author:** Srishti A  
+**Designation:** Final Year Student, Master of Computer Applications (MCA)  
+**Institution:** Department of Computer Applications, Dayananda Sagar University (DSU), Bengaluru, Karnataka, India  
 **Correspondence:** `srishti@demo.in`  
-**Keywords:** Citizen Science, Multimodal Vision AI, Urban Water Governance, Perceptual Hashing, Environmental Law Enforcement, Lake Health Index, Decentralized Verification.
+**Project Repository:** https://github.com/Srishti2208/Water-Monitoring-System  
+**Keywords:** Citizen Science, Multimodal Vision AI, Urban Water Governance, Perceptual Hashing, Environmental Law Enforcement, Lake Health Index, Decentralized Verification, Dayananda Sagar University.
 
 ---
 
