@@ -35,6 +35,43 @@ export function AdminClientView({ stats, initialOutbox }: AdminClientViewProps) 
   const [runningSla, setRunningSla] = useState(false);
   const [slaResult, setSlaResult] = useState<string | null>(null);
 
+  // Add Lake Form in Admin
+  const [lakeName, setLakeName] = useState('');
+  const [lakeWard, setLakeWard] = useState('');
+  const [lakeLat, setLakeLat] = useState('12.9716');
+  const [lakeLng, setLakeLng] = useState('77.5946');
+  const [lakeScore, setLakeScore] = useState('75');
+  const [submittingLake, setSubmittingLake] = useState(false);
+  const [lakeCreateResult, setLakeCreateResult] = useState<string | null>(null);
+
+  const handleAdminAddLake = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmittingLake(true);
+    setLakeCreateResult(null);
+    try {
+      const res = await fetch('/api/lakes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: lakeName,
+          ward: lakeWard,
+          lat: lakeLat,
+          lng: lakeLng,
+          currentHealthScore: lakeScore,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to add lake');
+      setLakeCreateResult(`Success: Lake "${data.lake.name}" registered and 90-day baseline snapshots created!`);
+      setLakeName('');
+      setLakeWard('');
+    } catch (err: any) {
+      setLakeCreateResult('Error: ' + err.message);
+    } finally {
+      setSubmittingLake(false);
+    }
+  };
+
   const [outbox, setOutbox] = useState(initialOutbox);
   const [selectedOutboxItem, setSelectedOutboxItem] = useState<any | null>(null);
 
@@ -177,6 +214,90 @@ export function AdminClientView({ stats, initialOutbox }: AdminClientViewProps) 
           </CardContent>
         </Card>
       </div>
+
+      {/* REGISTER NEW LAKE FORM CARD */}
+      <Card className="shadow-xs border-sky-200">
+        <CardHeader className="pb-3 bg-sky-50/50 border-b">
+          <CardTitle className="text-sm font-bold flex items-center gap-2 text-slate-900">
+            <Settings className="h-4 w-4 text-sky-600" />
+            Register New Waterbody in Bengaluru Lake Registry
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-4 space-y-3">
+          <p className="text-xs text-slate-600">
+            Add a newly identified lake or tank to the GIS surveillance system. Generates 90-day baseline telemetry and makes it immediately available for citizen reporting and spatial maps.
+          </p>
+
+          {lakeCreateResult && (
+            <div
+              className={`p-2.5 rounded text-xs font-medium ${
+                lakeCreateResult.startsWith('Success')
+                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  : 'bg-rose-50 text-rose-800 border border-rose-200'
+              }`}
+            >
+              {lakeCreateResult}
+            </div>
+          )}
+
+          <form onSubmit={handleAdminAddLake} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 text-xs items-end">
+            <div>
+              <label className="font-bold text-slate-700 block mb-1">Lake Name *</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Yelahanka Lake"
+                value={lakeName}
+                onChange={(e) => setLakeName(e.target.value)}
+                className="w-full px-2.5 py-1.5 border rounded focus:ring-1 focus:ring-sky-500 font-medium"
+              />
+            </div>
+            <div>
+              <label className="font-bold text-slate-700 block mb-1">Ward / Locality *</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Ward 4 - Yelahanka"
+                value={lakeWard}
+                onChange={(e) => setLakeWard(e.target.value)}
+                className="w-full px-2.5 py-1.5 border rounded focus:ring-1 focus:ring-sky-500 font-medium"
+              />
+            </div>
+            <div>
+              <label className="font-bold text-slate-700 block mb-1">Latitude (°N) *</label>
+              <input
+                type="number"
+                step="0.0001"
+                required
+                value={lakeLat}
+                onChange={(e) => setLakeLat(e.target.value)}
+                className="w-full px-2.5 py-1.5 border rounded focus:ring-1 focus:ring-sky-500 font-mono"
+              />
+            </div>
+            <div>
+              <label className="font-bold text-slate-700 block mb-1">Longitude (°E) *</label>
+              <input
+                type="number"
+                step="0.0001"
+                required
+                value={lakeLng}
+                onChange={(e) => setLakeLng(e.target.value)}
+                className="w-full px-2.5 py-1.5 border rounded focus:ring-1 focus:ring-sky-500 font-mono"
+              />
+            </div>
+            <div>
+              <Button
+                type="submit"
+                variant="civic"
+                disabled={submittingLake}
+                className="w-full text-xs h-[34px]"
+              >
+                {submittingLake ? 'Adding Lake...' : '+ Add Lake'}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
 
       {/* OUTBOX TABLE (DEMO_MODE Fallback Inspection) */}
       <Card className="shadow-xs overflow-hidden">

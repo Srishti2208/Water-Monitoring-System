@@ -73,6 +73,15 @@ const DEMO_PRESETS = [
     hasExifGps: false,
     hasExifTimestamp: false,
   },
+  {
+    name: 'Test Rejection: Non-Water Image from Google',
+    path: '/demo-images/fake_google_meme.jpg',
+    lat: 12.9716,
+    lng: 77.5946,
+    lakeName: 'Invalid / Web Stock Photo',
+    hasExifGps: false,
+    hasExifTimestamp: false,
+  },
 ];
 
 export default function ReportPage() {

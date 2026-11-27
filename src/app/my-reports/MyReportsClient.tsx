@@ -12,6 +12,9 @@ import {
   ExternalLink,
   ChevronRight,
   TrendingUp,
+  AlertOctagon,
+  AlertTriangle,
+  Info,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -97,6 +100,9 @@ export function MyReportsClient({ reports: initialReports, currentUserEmail }: M
             const trust = JSON.parse(report.trust || '{}');
             const photoSrc = photos[0] || '/demo-images/solid_waste.jpg';
             const isClaimedResolved = report.status === 'RESOLVED_CLAIMED';
+            const isRejected = report.status === 'REJECTED';
+            const rejectionEvent = report.statusEvents?.find((e: any) => e.toStatus === 'REJECTED');
+            const rejectionNote = trust.rejectionReason || rejectionEvent?.note || 'Report did not meet verification criteria.';
 
             return (
               <Card key={report.id} className="overflow-hidden shadow-xs hover:border-slate-300 transition-colors">
@@ -156,6 +162,22 @@ export function MyReportsClient({ reports: initialReports, currentUserEmail }: M
                           </span>
                         )}
                       </div>
+
+                      {/* Explicit Rejection Reason Card */}
+                      {isRejected && (
+                        <div className="mt-2.5 p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-900 text-xs space-y-1.5 max-w-xl">
+                          <div className="flex items-center gap-1.5 font-bold text-rose-800">
+                            <AlertOctagon className="h-4 w-4 shrink-0 text-rose-600" />
+                            <span>Report Rejected by JalDrishti Governance Engine</span>
+                          </div>
+                          <div className="text-[11px] text-rose-900 bg-rose-100/70 p-2 rounded font-mono">
+                            {rejectionNote}
+                          </div>
+                          <div className="text-[10px] text-rose-700 leading-relaxed pt-0.5">
+                            <strong>Why was this rejected?</strong> Submissions must be live, authentic photos taken on-site at a registered Bengaluru lake with device GPS enabled. Downloaded web images, screenshots, non-water photos, or duplicate images within 500m are strictly barred.
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 

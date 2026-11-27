@@ -93,7 +93,7 @@ export function Navbar() {
               JalDrishti
             </span>
             <span className="text-[10px] text-slate-500 font-semibold tracking-wider uppercase -mt-1">
-              Bengaluru Lakes Registry
+              Autonomous Lake &amp; Water Quality Governance
             </span>
           </div>
         </Link>

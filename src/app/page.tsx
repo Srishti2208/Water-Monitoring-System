@@ -59,8 +59,11 @@ export default async function HomePage() {
             Karnataka Waterbody Protection Initiative • NGT Compliant
           </Badge>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight max-w-3xl mx-auto">
-            Autonomous Water Quality &amp; Lake Pollution Monitoring for Bengaluru
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+            <span className="block text-sky-850">JalDrishti: Autonomous Lake &amp; Water Quality Governance Platform</span>
+            <span className="block text-lg sm:text-2xl font-bold text-teal-700 mt-2">
+              AI-Powered Surveillance, Tamper-Proof Evidence &amp; Statutory Municipal Accountability
+            </span>
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">

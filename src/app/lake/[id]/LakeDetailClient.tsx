@@ -132,6 +132,16 @@ export function LakeDetailClient({
             <MapPin className="h-4 w-4 text-sky-600" />
             {lake.ward} • Coordinates: {lake.lat.toFixed(4)}°N, {lake.lng.toFixed(4)}°E
           </p>
+          <div className="pt-2">
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${lake.lat},${lake.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow-xs transition"
+            >
+              <span>📍 Turn-by-Turn GPS Navigation (Google Maps) ↗</span>
+            </a>
+          </div>
         </div>
 
         {/* Big Health Score Badge */}
@@ -231,6 +241,68 @@ export function LakeDetailClient({
           </CardContent>
         </Card>
       </div>
+
+      {/* WATER QUALITY INDEX (WQI) ESTIMATED SUB-PARAMETERS */}
+      <Card className="shadow-xs border-teal-200">
+        <CardHeader className="pb-3 bg-teal-50/40 border-b">
+          <CardTitle className="text-base flex items-center justify-between text-slate-900">
+            <span className="flex items-center gap-2">
+              <Activity className="h-4 w-4 text-teal-600" />
+              Limnological &amp; Water Quality Sub-Parameters (Estimated WQI Model)
+            </span>
+            <Badge variant="outline" className="text-[10px] font-mono border-teal-300 text-teal-800">
+              CPCB Class {lake.currentHealthScore >= 70 ? 'B / C' : lake.currentHealthScore >= 40 ? 'D' : 'E (Hypoxic)'}
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-400 font-bold uppercase text-[10px] block">Dissolved Oxygen (DO)</span>
+              <div className="text-lg font-black text-slate-900">
+                {(Math.max(1.0, (lake.currentHealthScore / 100) * 7.2 + 0.8)).toFixed(1)} <span className="text-xs font-normal text-slate-500">mg/L</span>
+              </div>
+              <span className="text-[10px] text-slate-500 block">
+                Standard: &gt; 4.0 mg/L ({lake.currentHealthScore >= 50 ? 'Compliant' : 'Depleted/Hypoxic'})
+              </span>
+            </div>
+
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-400 font-bold uppercase text-[10px] block">Biochemical Oxygen (BOD)</span>
+              <div className="text-lg font-black text-slate-900">
+                {(Math.max(2.0, ((100 - lake.currentHealthScore) / 100) * 26 + 1.8)).toFixed(1)} <span className="text-xs font-normal text-slate-500">mg/L</span>
+              </div>
+              <span className="text-[10px] text-slate-500 block">
+                Standard: &lt; 3.0 mg/L ({lake.currentHealthScore >= 70 ? 'Acceptable' : 'Elevated Organic Load'})
+              </span>
+            </div>
+
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-400 font-bold uppercase text-[10px] block">Trophic State (TSI)</span>
+              <div className="text-base font-black text-slate-900 truncate">
+                {lake.currentHealthScore >= 70
+                  ? 'Mesotrophic'
+                  : lake.currentHealthScore >= 40
+                  ? 'Eutrophic'
+                  : 'Hyper-Eutrophic'}
+              </div>
+              <span className="text-[10px] text-slate-500 block">
+                {lake.currentHealthScore >= 70 ? 'Low Algal Density' : 'Cyanobacteria & Foam Risk'}
+              </span>
+            </div>
+
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-400 font-bold uppercase text-[10px] block">Secchi Transparency</span>
+              <div className="text-lg font-black text-slate-900">
+                {lake.currentHealthScore >= 70 ? '> 60 cm' : lake.currentHealthScore >= 40 ? '30 – 60 cm' : '< 30 cm'}
+              </div>
+              <span className="text-[10px] text-slate-500 block">
+                Visual photic depth indicator
+              </span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Recent Incident Reports for this Lake */}
       <Card className="shadow-xs">

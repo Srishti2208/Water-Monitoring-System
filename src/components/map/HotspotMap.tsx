@@ -254,14 +254,24 @@ const DynamicInteractiveMap = dynamic(
                         </p>
                         <div className="flex items-center justify-between text-[10px] border-t pt-1.5 text-slate-500">
                           <span>Status: <strong className="text-slate-800">{r.status}</strong></span>
-                          {r.complaint && (
-                            <Link
-                              href={`/complaint/${r.complaint.trackingId}`}
-                              className="text-sky-600 font-bold hover:underline"
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={`https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-teal-700 font-bold hover:underline"
                             >
-                              Notice &rarr;
-                            </Link>
-                          )}
+                              📍 GPS
+                            </a>
+                            {r.complaint && (
+                              <Link
+                                href={`/complaint/${r.complaint.trackingId}`}
+                                className="text-sky-600 font-bold hover:underline"
+                              >
+                                Notice &rarr;
+                              </Link>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </Popup>
@@ -298,12 +308,22 @@ const DynamicInteractiveMap = dynamic(
                           </span>
                         </div>
                       </div>
-                      <Link
-                        href={`/lake/${lake.id}`}
-                        className="block text-center bg-sky-600 text-white font-semibold py-1 rounded hover:bg-sky-700 transition-colors"
-                      >
-                        View Lake Analytics &rarr;
-                      </Link>
+                      <div className="flex flex-col gap-1.5 mt-2">
+                        <Link
+                          href={`/lake/${lake.id}`}
+                          className="block text-center bg-sky-600 text-white font-semibold py-1 rounded hover:bg-sky-700 transition-colors text-[11px]"
+                        >
+                          View Lake Analytics &rarr;
+                        </Link>
+                        <a
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${lake.lat},${lake.lng}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-center bg-teal-50 border border-teal-200 text-teal-800 font-semibold py-1 rounded hover:bg-teal-100 transition-colors text-[11px]"
+                        >
+                          📍 Navigate (Google Maps) ↗
+                        </a>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>

@@ -141,11 +141,13 @@ export async function POST(req: NextRequest) {
 
     // Determine nearest lake if lakeId is not provided
     let lakeId = payload.lakeId;
-    if (!lakeId) {
-      const lakes = await prisma.lake.findMany();
+    let minDistanceToLake = 0;
+    const lakes = await prisma.lake.findMany();
+    const { calculateDistanceMeters } = await import('@/services/dhash');
+
+    if (!lakeId && lakes.length > 0) {
       let closestLake = lakes[0];
       let minDistance = Infinity;
-      const { calculateDistanceMeters } = await import('@/services/dhash');
       for (const l of lakes) {
         const dist = calculateDistanceMeters(lat, lng, l.lat, l.lng);
         if (dist < minDistance) {
@@ -154,11 +156,36 @@ export async function POST(req: NextRequest) {
         }
       }
       lakeId = closestLake.id;
+      minDistanceToLake = minDistance;
+    } else if (lakeId) {
+      const selectedLake = lakes.find((l) => l.id === lakeId);
+      if (selectedLake) {
+        minDistanceToLake = calculateDistanceMeters(lat, lng, selectedLake.lat, selectedLake.lng);
+      }
     }
 
     // 2. Vision Service AI Analysis
     const visionService = getVisionService();
     let visionAnalysis = await visionService.analyzeWaterImage(uploadedFileBuffer || savedPhotoPath);
+
+    // Check for rejection conditions:
+    // Reason A: Irrelevant / Non-water image detected (stock image, Google image, meme, indoor)
+    const isNonWaterImage = visionAnalysis.isWaterBody === false;
+
+    // Reason B: Coordinate Out of Bounds (more than 3km from registered lake)
+    const isCoordinateOutOfBounds = minDistanceToLake > 3000;
+
+    // Reason C: Duplicate image within 500m / 7 days
+    const isDuplicate = Boolean(trustResult.duplicateOfId);
+
+    let rejectionReason: string | undefined;
+    if (isNonWaterImage) {
+      rejectionReason = visionAnalysis.rejectionReason || 'IRRELEVANT_NON_WATER_IMAGE: Uploaded image does not depict an outdoor lake or waterbody.';
+    } else if (isDuplicate) {
+      rejectionReason = `DUPLICATE_IMAGE_HASH: Near-duplicate photo detected within 500m / 7 days (Hamming match with Report ${trustResult.duplicateOfId}).`;
+    } else if (isCoordinateOutOfBounds) {
+      rejectionReason = `COORDINATE_OUT_OF_BOUNDS: Reported location is ${(minDistanceToLake / 1000).toFixed(1)}km away from designated lake catchment (limit 3.0km).`;
+    }
 
     // Apply community cross-validation bonus (+1 effective severity, cap 5)
     let effectiveSeverity = visionAnalysis.severity;
@@ -190,6 +217,7 @@ export async function POST(req: NextRequest) {
           exifVerified: trustResult.exifVerified,
           communityVerified: trustResult.communityVerified,
           duplicateOfId: trustResult.duplicateOfId,
+          rejectionReason,
         }),
         status: 'SUBMITTED',
         dHash,
@@ -208,16 +236,16 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // 5. Automatic transition: SUBMITTED -> AI_VALIDATED
+    // 5. Automatic transition: SUBMITTED -> AI_VALIDATED (or REJECTED)
     let validatedReport;
-    if (trustResult.duplicateOfId) {
-      // Mark as REJECTED due to duplicate within 500m/7d
+    if (rejectionReason) {
+      // Mark as REJECTED with explicit audit reason
       validatedReport = await transitionReportStatus({
         reportId: report.id,
         toStatus: 'REJECTED',
-        actor: 'JalDrishti Anti-Spam Engine',
+        actor: 'JalDrishti Multi-Tier Verification Engine',
         actorRole: 'SYSTEM',
-        note: `Duplicate image detected within 500m / 7 days (Hamming distance match with Report ${trustResult.duplicateOfId}). Excluded from double counting.`,
+        note: `REPORT REJECTED: ${rejectionReason}`,
       });
     } else {
       validatedReport = await transitionReportStatus({
